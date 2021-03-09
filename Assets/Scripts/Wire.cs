@@ -6,33 +6,33 @@ public class Wire : MonoBehaviour
 
     public ConnectionPoint startConnectionPoint;
     public ConnectionPoint endConnectionPoint;
-    public bool render;
+    public bool render = false;
 
     private void Start()
     {
-        render = false;
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 2; 
+        lineRenderer.positionCount = 3;
     }
     void Update()
     {
         if (render)
         {
-            Vector3 stratPos = startConnectionPoint.transform.position;
+            Vector3 startPos = startConnectionPoint.transform.position;
             Vector3 endPos = endConnectionPoint.transform.position;
-            Vector3[] pos = { stratPos, endPos };
+            Vector3 middlePoint = new Vector3(startPos.x, endPos.y);
+            Vector3[] pos = { startPos, middlePoint, endPos };
             lineRenderer.SetPositions(pos);
         }
     }
 
-    void Register()
+    public void Register()
     {
-        render = true;
         startConnectionPoint.RegisterWire(this);
         endConnectionPoint.RegisterWire(this);
+        render = true;
     }
 
-    void DeRegister()
+    public void DeRegister()
     {
         render = false;
         startConnectionPoint.DeRegisterWire();
