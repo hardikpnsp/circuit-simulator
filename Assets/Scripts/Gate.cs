@@ -18,4 +18,9 @@ public abstract class Gate : MonoBehaviour, IGate
     {
         throw new System.NotImplementedException();
     }
+
+    public virtual void UpdateLogic()
+    {
+        throw new System.NotImplementedException();
+    }
 }

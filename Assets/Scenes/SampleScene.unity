@@ -237,6 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notGatePrefab: {fileID: 6786948263805084850, guid: 7ff50877db2cd684a88cbea72934ef5e, type: 3}
   wirePrefab: {fileID: 9101254530287655470, guid: 368cbf9ebec1af94c871e8f124862359, type: 3}
+  switchPrefab: {fileID: 3025968722632433517, guid: 8d4e937a75d294c4c9c025aa4dfbd6db, type: 3}
 --- !u!4 &1472924658
 Transform:
   m_ObjectHideFlags: 0

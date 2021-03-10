@@ -1,18 +1,23 @@
 using System;
 using UnityEngine;
 
-public class NotGate : Gate
+public class Switch : Gate
 {
-    Wire inputWire;
     Wire outputWire;
 
+    [SerializeField]
+    bool signal = false;
+
+    SpriteRenderer spriteRenderer;
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     public override void DeRegisterWire(string id)
     {
         switch (id)
         {
-            case "Input_A":
-                inputWire = null;
-                break;
             case "Output_A":
                 outputWire = null;
                 break;
@@ -26,9 +31,6 @@ public class NotGate : Gate
     {
         switch (id)
         {
-            case "Input_A":
-                inputWire = wire;
-                break;
             case "Output_A":
                 outputWire = wire;
                 break;
@@ -37,14 +39,13 @@ public class NotGate : Gate
         }
         CheckFullyConnected();
     }
-
     public override void CheckFullyConnected()
     {
-        if (inputWire != null && outputWire != null)
+        if (outputWire != null)
         {
-            Debug.Log("Fully Connected!");
             fullyConnected = true;
-        } else
+        }
+        else
         {
             fullyConnected = false;
         }
@@ -52,10 +53,22 @@ public class NotGate : Gate
 
     public override void UpdateLogic()
     {
-        if (fullyConnected)
-        {
-            outputWire.UpdateSignal(!inputWire.signal, this);
-        }
+        // Do nothing
     }
 
+    private void OnMouseDown()
+    {
+        signal = !signal;
+        if (signal)
+        {
+            spriteRenderer.color = new Color(0.0f, 0.7f, 0.03f);
+        } else
+        {
+            spriteRenderer.color = new Color(0.7f, 0.0f, 0.03f);
+        }
+        if (fullyConnected)
+        {
+            outputWire.UpdateSignal(signal, this);
+        }
+    }
 }

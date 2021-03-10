@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Wire : MonoBehaviour
@@ -7,6 +8,10 @@ public class Wire : MonoBehaviour
     public ConnectionPoint startConnectionPoint;
     public ConnectionPoint endConnectionPoint;
     public bool render = false;
+
+    public bool signal = false;
+
+    public HashSet<Gate> registeredGates = new HashSet<Gate>();
 
     private void Start()
     {
@@ -27,6 +32,8 @@ public class Wire : MonoBehaviour
 
     public void Register()
     {
+        registeredGates.Add(startConnectionPoint.logicGate);
+        registeredGates.Add(endConnectionPoint.logicGate);
         startConnectionPoint.RegisterWire(this);
         endConnectionPoint.RegisterWire(this);
         render = true;
@@ -35,8 +42,21 @@ public class Wire : MonoBehaviour
     public void DeRegister()
     {
         render = false;
+        registeredGates = new HashSet<Gate>();
         startConnectionPoint.DeRegisterWire();
         endConnectionPoint.DeRegisterWire();
         Destroy(gameObject);
+    }
+
+    public void UpdateSignal(bool newSignal, Gate currentGate)
+    {
+        signal = newSignal;
+        foreach (Gate gate in registeredGates)
+        {
+            if (gate != currentGate)
+            {
+                gate.UpdateLogic();
+            }
+        }
     }
 }
