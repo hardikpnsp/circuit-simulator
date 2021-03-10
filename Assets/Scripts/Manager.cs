@@ -8,7 +8,7 @@ public class Manager : MonoBehaviour
 
     void Start()
     {
-        ConnectionPoint outputO, inputA, inputB, outputA, outputB;
+        ConnectionPoint outputO, inputA, inputB, outputA, outputB, outputC, inputC;
 
         Switch s = Instantiate(switchPrefab, new Vector3(-5, 0, 0), Quaternion.identity);
         ConnectionPoint[] pointO = s.GetComponentsInChildren<ConnectionPoint>();
@@ -27,15 +27,21 @@ public class Manager : MonoBehaviour
         inputB = pointsB[0];
         outputB = pointsB[1];
 
+        NotGate notGateC = Instantiate(notGatePrefab, new Vector3(5, 2, 0), Quaternion.identity);
+        ConnectionPoint[] pointsC = notGateC.GetComponentsInChildren<ConnectionPoint>();
+
+        inputC = pointsC[0];
+        outputC = pointsC[1];
+
 
         Wire wireO = Instantiate(wirePrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        wireO.startConnectionPoint = outputO;
-        wireO.endConnectionPoint = inputA;
-
+        wireO.AddStartConnection(outputO);
+        wireO.AddEndConnection(inputA);
 
         Wire wireA = Instantiate(wirePrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        wireA.startConnectionPoint = outputA;
-        wireA.endConnectionPoint = inputB;
+        wireA.AddStartConnection(outputA);
+        wireA.AddEndConnection(inputB);
+        wireA.AddEndConnection(inputC);
 
         wireO.Register();
         wireA.Register();
