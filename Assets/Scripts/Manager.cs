@@ -8,7 +8,7 @@ public class Manager : MonoBehaviour
 
     void Start()
     {
-        ConnectionPoint outputO, inputA, inputB, inputC, outputA, outputB, outputC;
+        ConnectionPoint outputO, inputA, inputB, outputA, outputB;
 
         Switch s = Instantiate(switchPrefab, new Vector3(-5, 0, 0), Quaternion.identity);
         ConnectionPoint[] pointO = s.GetComponentsInChildren<ConnectionPoint>();

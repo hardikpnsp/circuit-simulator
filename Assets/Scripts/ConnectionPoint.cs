@@ -4,7 +4,12 @@ public class ConnectionPoint: MonoBehaviour
 {
     public string id;
 
-    public Gate logicGate;
+    public IGate logicGate;
+
+    private void Awake()
+    {
+        logicGate = GetComponentInParent<IGate>();
+    }
 
     public void RegisterWire(Wire wire)
     {

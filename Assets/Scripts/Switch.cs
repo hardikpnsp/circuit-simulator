@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Switch : Gate
+public class Switch : MonoBehaviour, IGate
 {
     Wire outputWire;
 
@@ -10,11 +10,14 @@ public class Switch : Gate
 
     SpriteRenderer spriteRenderer;
 
+    public bool fullyConnected { get; set; }
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        UpdateColor(); 
     }
-    public override void DeRegisterWire(string id)
+    public void DeRegisterWire(string id)
     {
         switch (id)
         {
@@ -27,7 +30,7 @@ public class Switch : Gate
         CheckFullyConnected();
     }
 
-    public override void RegisterWire(string id, Wire wire)
+    public void RegisterWire(string id, Wire wire)
     {
         switch (id)
         {
@@ -39,7 +42,7 @@ public class Switch : Gate
         }
         CheckFullyConnected();
     }
-    public override void CheckFullyConnected()
+    public void CheckFullyConnected()
     {
         if (outputWire != null)
         {
@@ -51,21 +54,27 @@ public class Switch : Gate
         }
     }
 
-    public override void UpdateLogic()
+    public void UpdateLogic()
     {
         // Do nothing
+    }
+
+    void UpdateColor()
+    {
+        if (signal)
+        {
+            spriteRenderer.color = new Color(0.0f, 0.7f, 0.03f);
+        }
+        else
+        {
+            spriteRenderer.color = new Color(0.7f, 0.0f, 0.03f);
+        }
     }
 
     private void OnMouseDown()
     {
         signal = !signal;
-        if (signal)
-        {
-            spriteRenderer.color = new Color(0.0f, 0.7f, 0.03f);
-        } else
-        {
-            spriteRenderer.color = new Color(0.7f, 0.0f, 0.03f);
-        }
+        UpdateColor();
         if (fullyConnected)
         {
             outputWire.UpdateSignal(signal, this);

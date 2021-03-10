@@ -11,7 +11,7 @@ public class Wire : MonoBehaviour
 
     public bool signal = false;
 
-    public HashSet<Gate> registeredGates = new HashSet<Gate>();
+    public HashSet<IGate> registeredGates = new HashSet<IGate>();
 
     private void Start()
     {
@@ -42,20 +42,20 @@ public class Wire : MonoBehaviour
     public void DeRegister()
     {
         render = false;
-        registeredGates = new HashSet<Gate>();
+        registeredGates = new HashSet<IGate>();
         startConnectionPoint.DeRegisterWire();
         endConnectionPoint.DeRegisterWire();
         Destroy(gameObject);
     }
 
-    public void UpdateSignal(bool newSignal, Gate currentGate)
+    public void UpdateSignal(bool newSignal, IGate currentLogicGate)
     {
         signal = newSignal;
-        foreach (Gate gate in registeredGates)
+        foreach (IGate logicGate in registeredGates)
         {
-            if (gate != currentGate)
+            if (logicGate != currentLogicGate)
             {
-                gate.UpdateLogic();
+                logicGate.UpdateLogic();
             }
         }
     }

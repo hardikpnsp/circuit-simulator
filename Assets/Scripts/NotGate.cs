@@ -1,12 +1,14 @@
 using System;
 using UnityEngine;
 
-public class NotGate : Gate
+public class NotGate : MonoBehaviour, IGate
 {
     Wire inputWire;
     Wire outputWire;
 
-    public override void DeRegisterWire(string id)
+    public bool fullyConnected { get; set; }
+
+    public void DeRegisterWire(string id)
     {
         switch (id)
         {
@@ -22,7 +24,7 @@ public class NotGate : Gate
         CheckFullyConnected();
     }
 
-    public override void RegisterWire(string id, Wire wire)
+    public void RegisterWire(string id, Wire wire)
     {
         switch (id)
         {
@@ -38,11 +40,10 @@ public class NotGate : Gate
         CheckFullyConnected();
     }
 
-    public override void CheckFullyConnected()
+    public void CheckFullyConnected()
     {
         if (inputWire != null && outputWire != null)
         {
-            Debug.Log("Fully Connected!");
             fullyConnected = true;
         } else
         {
@@ -50,7 +51,7 @@ public class NotGate : Gate
         }
     }
 
-    public override void UpdateLogic()
+    public void UpdateLogic()
     {
         if (fullyConnected)
         {
