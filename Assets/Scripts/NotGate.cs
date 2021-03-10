@@ -6,7 +6,7 @@ public class NotGate : MonoBehaviour, IGate
     Wire inputWire;
     Wire outputWire;
 
-    public bool fullyConnected { get; set; }
+    public bool FullyConnected { get; set; }
 
     public void DeRegisterWire(string id)
     {
@@ -44,16 +44,16 @@ public class NotGate : MonoBehaviour, IGate
     {
         if (inputWire != null && outputWire != null)
         {
-            fullyConnected = true;
+            FullyConnected = true;
         } else
         {
-            fullyConnected = false;
+            FullyConnected = false;
         }
     }
 
     public void UpdateLogic()
     {
-        if (fullyConnected)
+        if (FullyConnected)
         {
             outputWire.UpdateSignal(!inputWire.signal, this);
         }

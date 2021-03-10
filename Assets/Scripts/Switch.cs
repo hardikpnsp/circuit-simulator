@@ -10,7 +10,7 @@ public class Switch : MonoBehaviour, IGate
 
     SpriteRenderer spriteRenderer;
 
-    public bool fullyConnected { get; set; }
+    public bool FullyConnected { get; set; }
 
     private void Start()
     {
@@ -46,11 +46,11 @@ public class Switch : MonoBehaviour, IGate
     {
         if (outputWire != null)
         {
-            fullyConnected = true;
+            FullyConnected = true;
         }
         else
         {
-            fullyConnected = false;
+            FullyConnected = false;
         }
     }
 
@@ -75,7 +75,7 @@ public class Switch : MonoBehaviour, IGate
     {
         signal = !signal;
         UpdateColor();
-        if (fullyConnected)
+        if (FullyConnected)
         {
             outputWire.UpdateSignal(signal, this);
         }
