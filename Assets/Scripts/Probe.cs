@@ -1,28 +1,39 @@
 using System;
 using UnityEngine;
 
-public class Switch : MonoBehaviour, IGate
+public class Probe : MonoBehaviour, IGate
 {
-    Wire outputWire;
+    Wire inputWire;
 
     [SerializeField]
     bool signal = false;
+    public bool FullyConnected { get; set; }
 
     SpriteRenderer spriteRenderer;
-
-    public bool FullyConnected { get; set; }
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         UpdateColor();
     }
+    public void CheckFullyConnected()
+    {
+        if (inputWire != null)
+        {
+            FullyConnected = true;
+        }
+        else
+        {
+            FullyConnected = false;
+        }
+    }
+
     public void DeRegisterWire(string id)
     {
         switch (id)
         {
-            case "Output_A":
-                outputWire = null;
+            case "Input_A":
+                inputWire = null;
                 break;
             default:
                 throw new Exception("ID not supported");
@@ -34,50 +45,33 @@ public class Switch : MonoBehaviour, IGate
     {
         switch (id)
         {
-            case "Output_A":
-                outputWire = wire;
+            case "Input_A":
+                inputWire = wire;
                 break;
             default:
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
     }
-    public void CheckFullyConnected()
-    {
-        if (outputWire != null)
-        {
-            FullyConnected = true;
-        }
-        else
-        {
-            FullyConnected = false;
-        }
-    }
 
     public void UpdateLogic()
     {
-        // Do nothing
+        if (FullyConnected)
+        {
+            signal = inputWire.signal;
+            UpdateColor();
+        }
     }
 
     void UpdateColor()
     {
         if (signal)
         {
-            spriteRenderer.color = Color.green;
+            spriteRenderer.color = Color.yellow;
         }
         else
         {
-            spriteRenderer.color = Color.red;
-        }
-    }
-
-    private void OnMouseDown()
-    {
-        signal = !signal;
-        UpdateColor();
-        if (FullyConnected)
-        {
-            outputWire.UpdateSignal(signal, this);
+            spriteRenderer.color = Color.white;
         }
     }
 }
