@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Probe : MonoBehaviour, IGate
+public class Probe : Movable, IGate
 {
     Wire inputWire;
 

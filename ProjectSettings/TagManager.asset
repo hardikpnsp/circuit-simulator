@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Wire
+    uniqueID: 2514628277
+    locked: 0
+  - name: CircuitElements
+    uniqueID: 3751288517
+    locked: 0
+  - name: ConnectionPoint
+    uniqueID: 767449111
+    locked: 0
+  - name: UI
+    uniqueID: 1959811735
+    locked: 0

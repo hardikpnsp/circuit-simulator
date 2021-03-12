@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-public class NotGate : MonoBehaviour, IGate
+public class NotGate : Movable, IGate
 {
     Wire inputWire;
     Wire outputWire;
@@ -58,5 +57,4 @@ public class NotGate : MonoBehaviour, IGate
             outputWire.UpdateSignal(!inputWire.signal, this);
         }
     }
-
 }

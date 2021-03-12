@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Switch : MonoBehaviour, IGate
+public class Switch : Movable, IGate
 {
     Wire outputWire;
 
@@ -71,7 +71,7 @@ public class Switch : MonoBehaviour, IGate
         }
     }
 
-    private void OnMouseDown()
+    public void OnMouseUpAsButton()
     {
         signal = !signal;
         UpdateColor();
