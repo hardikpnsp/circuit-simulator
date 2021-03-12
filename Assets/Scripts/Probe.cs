@@ -71,7 +71,7 @@ public class Probe : Movable, IGate
         }
         else
         {
-            spriteRenderer.color = Color.white;
+            spriteRenderer.color = Color.grey;
         }
     }
 }
