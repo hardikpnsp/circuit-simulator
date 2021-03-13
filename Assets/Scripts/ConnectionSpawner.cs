@@ -24,6 +24,12 @@ public class ConnectionSpawner : MonoBehaviour
         lineRenderer.positionCount = 3;
         lineRenderer.enabled = false;
     }
+    void backToZeroConnected()
+    {
+        start = null;
+        lineRenderer.enabled = false;
+        currentState = State.ZERO_CONNECTED;
+    }
 
     public void RegisterConnection(ConnectionPoint connectionPoint)
     {
@@ -40,12 +46,6 @@ public class ConnectionSpawner : MonoBehaviour
             return connectionPoint.connectionType == ConnectionPoint.ConnectionType.INPUT;
         }
 
-        void backToZeroConnected()
-        {
-            start = null;
-            lineRenderer.enabled = false;
-            currentState = State.ZERO_CONNECTED;
-        }
 
         if (currentState == State.ZERO_CONNECTED)
         {
@@ -104,6 +104,7 @@ public class ConnectionSpawner : MonoBehaviour
         }
     }
 
+
     private void UpdateLineRenderer()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -114,6 +115,10 @@ public class ConnectionSpawner : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(1))
+        {
+            backToZeroConnected();
+        }
         if (currentState != State.ZERO_CONNECTED)
         {
             UpdateLineRenderer();
