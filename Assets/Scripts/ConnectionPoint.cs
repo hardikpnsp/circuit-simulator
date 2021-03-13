@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ConnectionPoint : MonoBehaviour
+public class ConnectionPoint : MonoBehaviour, IPointerClickHandler
 {
     public string id;
 
@@ -27,7 +28,8 @@ public class ConnectionPoint : MonoBehaviour
         if (connectionType == ConnectionType.INPUT)
         {
             spriteRenderer.color = Color.white;
-        } else
+        }
+        else
         {
             spriteRenderer.color = Color.grey;
         }
@@ -48,8 +50,18 @@ public class ConnectionPoint : MonoBehaviour
         logicGate.DeRegisterWire(id);
     }
 
-    private void OnMouseUpAsButton()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        connectionSpawner.RegisterConnection(this);
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (wire != null)
+            {
+                wire.DeRegister(this);
+            }
+        }
+        else if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            connectionSpawner.RegisterConnection(this);
+        }
     }
 }

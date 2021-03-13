@@ -24,7 +24,6 @@ public class Movable : MonoBehaviour
     {
         if (selected)
         {
-            Debug.Log("OK");
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = mousePos + offset;
         }

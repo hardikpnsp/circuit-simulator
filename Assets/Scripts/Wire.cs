@@ -51,8 +51,18 @@ public class Wire : MonoBehaviour
     public void Register()
     {
         registeredGates.Add(startConnectionPoint.logicGate);
+
+        Vector3 startPos = startConnectionPoint.transform.position;
         foreach (Tuple<ConnectionPoint, LineRenderer> tuple in endConnectionPoints)
         {
+            LineRenderer lineRenderer = tuple.Item2;
+            ConnectionPoint connectionPoint = tuple.Item1;
+            Vector3 endPos = connectionPoint.transform.position;
+            Vector3 middlePoint = new Vector3(startPos.x, endPos.y);
+            Vector3[] pos = { startPos, middlePoint, endPos };
+            lineRenderer.SetPositions(pos);
+            lineRenderer.enabled = true;
+
             registeredGates.Add(tuple.Item1.logicGate);
             tuple.Item1.RegisterWire(this);
         }
@@ -63,8 +73,6 @@ public class Wire : MonoBehaviour
 
     public void DeRegister(ConnectionPoint deregisterConnectionPoint)
     {
-        render = false;
-        registeredGates = new HashSet<IGate>();
         if (startConnectionPoint == deregisterConnectionPoint)
         {
             startConnectionPoint.DeRegisterWire();
@@ -72,8 +80,14 @@ public class Wire : MonoBehaviour
         } 
         else
         {
+            Destroy(endConnectionPoints.Find(item => item.Item1 == deregisterConnectionPoint).Item2.gameObject);
+            endConnectionPoints.RemoveAll(item => item.Item1 == deregisterConnectionPoint);
             deregisterConnectionPoint.DeRegisterWire();
             registeredGates.Remove(deregisterConnectionPoint.logicGate);
+            if (registeredGates.Count == 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
