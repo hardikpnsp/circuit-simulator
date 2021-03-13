@@ -27,44 +27,68 @@ public class ConnectionSpawner : MonoBehaviour
 
     public void RegisterConnection(ConnectionPoint connectionPoint)
     {
+
+        bool isBadEndConnection()
+        {
+            return connectionPoint.connectionType == ConnectionPoint.ConnectionType.OUTPUT
+                || start == connectionPoint
+                || connectionPoint.wire != null;
+        }
+
+        bool isBadStartConnection()
+        {
+            return connectionPoint.connectionType == ConnectionPoint.ConnectionType.INPUT;
+        }
+
+        void backToZeroConnected()
+        {
+            start = null;
+            lineRenderer.enabled = false;
+            currentState = State.ZERO_CONNECTED;
+        }
+
         if (currentState == State.ZERO_CONNECTED)
         {
-            lineRenderer.enabled = true;
-            start = connectionPoint;
-            if (connectionPoint.wire != null)
+            // Can only start connection at Output and end at Input
+            if (isBadStartConnection())
             {
-                currentState = State.ALREADY_CONNECTED;
+                backToZeroConnected();
             }
             else
             {
-                currentState = State.ONE_CONNECTED;
+                lineRenderer.enabled = true;
+                start = connectionPoint;
+                if (connectionPoint.wire != null)
+                {
+                    currentState = State.ALREADY_CONNECTED;
+                }
+                else
+                {
+                    currentState = State.ONE_CONNECTED;
+                }
+                UpdateLineRenderer();
             }
-            UpdateLineRenderer();
         }
         else if (currentState == State.ONE_CONNECTED)
         {
-            if (start == connectionPoint)
+            if (isBadEndConnection())
             {
-                start = null;
-                currentState = State.ZERO_CONNECTED;
+                backToZeroConnected();
             }
             else
             {
-                lineRenderer.enabled = false;
                 Wire wire = Instantiate(wirePrefab, new Vector3(0, 0, 0), Quaternion.identity);
                 wire.AddStartConnection(start);
                 wire.AddEndConnection(connectionPoint);
                 wire.Register();
-                start = null;
-                currentState = State.ZERO_CONNECTED;
+                backToZeroConnected();
             }
         }
         else if (currentState == State.ALREADY_CONNECTED)
         {
-            if (start == connectionPoint)
+            if (isBadEndConnection())
             {
-                start = null;
-                currentState = State.ZERO_CONNECTED;
+                backToZeroConnected();
             }
             else
             {
@@ -75,8 +99,7 @@ public class ConnectionSpawner : MonoBehaviour
                     wire.AddEndConnection(connectionPoint);
                     wire.Register();
                 }
-                start = null;
-                currentState = State.ZERO_CONNECTED;
+                backToZeroConnected();
             }
         }
     }

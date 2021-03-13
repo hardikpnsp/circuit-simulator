@@ -10,8 +10,28 @@ public class ConnectionPoint : MonoBehaviour
 
     ConnectionSpawner connectionSpawner;
 
+    public enum ConnectionType
+    {
+        INPUT,
+        OUTPUT
+    };
+
+    public ConnectionType connectionType;
+
+    SpriteRenderer spriteRenderer;
+
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (connectionType == ConnectionType.INPUT)
+        {
+            spriteRenderer.color = Color.white;
+        } else
+        {
+            spriteRenderer.color = Color.grey;
+        }
+
         connectionSpawner = FindObjectOfType<ConnectionSpawner>();
         logicGate = GetComponentInParent<IGate>();
     }

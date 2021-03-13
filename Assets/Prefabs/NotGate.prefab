@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -543678779
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 918f73a85639c144eac4fa565d7b64e8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -221,9 +221,29 @@ PrefabInstance:
       propertyPath: logicGate
       value: 
       objectReference: {fileID: 6786948263805084850}
+    - target: {fileID: 6089570681441640128, guid: 54cfdb8e39e07864eb0753f9ba453af7, type: 3}
+      propertyPath: connectionType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6089570681441640141, guid: 54cfdb8e39e07864eb0753f9ba453af7, type: 3}
       propertyPath: m_Name
       value: OutputConnectionPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089570681441640142, guid: 54cfdb8e39e07864eb0753f9ba453af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089570681441640142, guid: 54cfdb8e39e07864eb0753f9ba453af7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089570681441640142, guid: 54cfdb8e39e07864eb0753f9ba453af7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6089570681441640142, guid: 54cfdb8e39e07864eb0753f9ba453af7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6089570681441640143, guid: 54cfdb8e39e07864eb0753f9ba453af7, type: 3}
       propertyPath: m_RootOrder
