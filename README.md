@@ -1,5 +1,8 @@
 ## Circuit Simulator
 
+This prototype has been compile to webGL and hosted on itch  
+You can play around with it here: [hardikpnsp.itch.io/circuit-simulator](https://hardikpnsp.itch.io/circuit-simulator)
+
 ### Steps to setup
 
 1. clone the repository
