@@ -28,6 +28,7 @@ public class Switch : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
 
     public void RegisterWire(string id, Wire wire)
@@ -41,6 +42,7 @@ public class Switch : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
     public void CheckFullyConnected()
     {
@@ -56,7 +58,10 @@ public class Switch : Movable, IGate
 
     public void UpdateLogic()
     {
-        // Do nothing
+        if (FullyConnected && outputWire.signal != signal)
+        {
+            outputWire.UpdateSignal(signal, this);
+        }
     }
 
     void UpdateColor()
@@ -75,9 +80,6 @@ public class Switch : Movable, IGate
     {
         signal = !signal;
         UpdateColor();
-        if (FullyConnected)
-        {
-            outputWire.UpdateSignal(signal, this);
-        }
+        UpdateLogic();
     }
 }

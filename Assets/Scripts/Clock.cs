@@ -1,19 +1,29 @@
 using System;
+using System.Collections;
+using UnityEngine;
 
-public class NotGate : Movable, IGate
+public class Clock : Movable, IGate
 {
-    Wire inputWire;
     Wire outputWire;
+
+    [SerializeField]
+    bool signal = false;
+
+    SpriteRenderer spriteRenderer;
 
     public bool FullyConnected { get; set; }
 
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        UpdateColor();
+        Debug.Log("OK");
+        StartCoroutine("PulseClock");
+    }
     public void DeRegisterWire(string id)
     {
         switch (id)
         {
-            case "Input_A":
-                inputWire = null;
-                break;
             case "Output_A":
                 outputWire = null;
                 break;
@@ -21,16 +31,12 @@ public class NotGate : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
-        UpdateLogic();
     }
 
     public void RegisterWire(string id, Wire wire)
     {
         switch (id)
         {
-            case "Input_A":
-                inputWire = wire;
-                break;
             case "Output_A":
                 outputWire = wire;
                 break;
@@ -38,15 +44,14 @@ public class NotGate : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
-        UpdateLogic();
     }
-
     public void CheckFullyConnected()
     {
-        if (inputWire != null && outputWire != null)
+        if (outputWire != null)
         {
             FullyConnected = true;
-        } else
+        }
+        else
         {
             FullyConnected = false;
         }
@@ -54,17 +59,33 @@ public class NotGate : Movable, IGate
 
     public void UpdateLogic()
     {
-        if (FullyConnected)
+        // Do nothing
+    }
+
+    void UpdateColor()
+    {
+        if (signal)
         {
-            bool newSignal = !inputWire.signal;
-            if (newSignal != outputWire.signal)
+            spriteRenderer.color = Color.green;
+        }
+        else
+        {
+            spriteRenderer.color = Color.red;
+        }
+    }
+
+    private IEnumerator PulseClock()
+    {
+        while (true)
+        {
+            signal = !signal;
+            UpdateColor();
+            if (FullyConnected)
             {
-                outputWire.UpdateSignal(newSignal, this);
+                outputWire.UpdateSignal(signal, this);
             }
-            else if (outputWire != null && outputWire.signal)
-            {
-                outputWire.UpdateSignal(false, this);
-            }
+            Debug.Log("One");
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
