@@ -21,6 +21,7 @@ public class NotGate : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
 
     public void RegisterWire(string id, Wire wire)
@@ -37,6 +38,7 @@ public class NotGate : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
 
     public void CheckFullyConnected()
@@ -54,7 +56,15 @@ public class NotGate : Movable, IGate
     {
         if (FullyConnected)
         {
-            outputWire.UpdateSignal(!inputWire.signal, this);
+            bool newSignal = !inputWire.signal;
+            if (newSignal != outputWire.signal)
+            {
+                outputWire.UpdateSignal(newSignal, this);
+            }
+            else if (outputWire != null && outputWire.signal)
+            {
+                outputWire.UpdateSignal(false, this);
+            }
         }
     }
 }

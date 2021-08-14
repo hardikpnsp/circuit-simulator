@@ -76,6 +76,7 @@ public class Wire : MonoBehaviour
         if (startConnectionPoint == deregisterConnectionPoint)
         {
             startConnectionPoint.DeRegisterWire();
+            endConnectionPoints.ForEach(tuple => tuple.Item1.DeRegisterWire());
             Destroy(gameObject);
         } 
         else

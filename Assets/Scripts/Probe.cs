@@ -39,6 +39,7 @@ public class Probe : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
 
     public void RegisterWire(string id, Wire wire)
@@ -52,6 +53,7 @@ public class Probe : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
 
     public void UpdateLogic()
@@ -59,8 +61,11 @@ public class Probe : Movable, IGate
         if (FullyConnected)
         {
             signal = inputWire.signal;
-            UpdateColor();
+        } else
+        {
+            signal = false;
         }
+        UpdateColor();
     }
 
     void UpdateColor()

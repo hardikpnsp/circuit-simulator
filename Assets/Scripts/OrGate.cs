@@ -36,6 +36,7 @@ public class OrGate : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
 
     public void RegisterWire(string id, Wire wire)
@@ -55,13 +56,22 @@ public class OrGate : Movable, IGate
                 throw new Exception("ID not supported");
         }
         CheckFullyConnected();
+        UpdateLogic();
     }
 
     public void UpdateLogic()
     {
         if (FullyConnected)
         {
-            outputWire.UpdateSignal(inputWireA.signal || inputWireB.signal, this);
+            bool newSignal = inputWireA.signal || inputWireB.signal;
+            if (newSignal != outputWire.signal)
+            {
+                outputWire.UpdateSignal(newSignal, this);
+            }
+        }
+        else if (outputWire != null && outputWire.signal)
+        {
+            outputWire.UpdateSignal(false, this);
         }
     }
 }
